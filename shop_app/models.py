@@ -9,7 +9,7 @@ NAME_REGEX = re.compile(r'^[a-zA-Z]+$')
 # Create your models here.
 
 
-class CustomerManager(models.Model):
+class CustomerManager(models.Manager):
     def regi_validator(self, postdata):
         errors = {}
         # Validate whether first name is less than 2 characters

@@ -23,6 +23,26 @@ def user_login(request):
 
 
 def user_registration(request):
+    errors = Customer.objects.regi_validator(request.POST)
+    if errors:
+        for value in errors.values():
+            messages.error(request, value)
+        return redirect('user_registration')
+    else:
+        new_customer = Customer.objects.create(
+            first_name=request.POST['first_name'],
+            last_name=request.POST['last_name'],
+            email=request.POST['email'],
+            date_of_birth=request.POST['date_of_birth'],
+            address=request.POST['address'],
+            city=request.POST['city'],
+            state=request.POST['state'],
+            zipcode=request.POST['zipcode'],
+            password=bcrypt.hashpw(
+                request.POST['password'].encode(), bcrypt.gensalt()).decode()
+
+        )
+
     context = {}
     return render(request, 'user_registration.html', context)
 
