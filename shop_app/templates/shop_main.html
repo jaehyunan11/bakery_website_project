@@ -28,13 +28,11 @@
     <!-- Nav bar -->
     <nav id="navbar">
         <div class="navbar__user__name">
-            <a href="#">Welcome {{session.name}}</a>
+            <a href="#">Welcome {{customer.first_name}}</a>
         </div>
         <div class="navbar__menu__main">
             <ul class="navbar__menu">
-                <li class="navbar__menu__item" data-link="#login"><a href="{% url 'user_login' %}">Login</a></li>
-                <li class="navbar__menu__item" data-link="#create_account"><a
-                        href="{% url 'user_registration' %}">Create Account</a></li>
+                <li class="navbar__menu__item" data-link="#logout"><a href="{% url 'logout' %}">Logout</a></li>
                 <li class="navbar__menu__item" data-link="#order_history"><a href="#">Order History</a></li>
                 <li class="navbar__menu__item" data-link="#my_page"><a href="#">My Page</a></li>
                 <li class="navbar__menu__item" data-link="#cart"><a href="{% url 'cart' %}">Cart</a></li>
@@ -44,10 +42,6 @@
                 <p id="cart-total">0</p>
             </ul>
         </div>
-        <!-- Toogle Button -->
-        <!-- <button class="navbar__toggle-btn">
-            <i class="fas fa-bars"></i>
-        </button> -->
     </nav>
     <hr>
     <!-- Header -->

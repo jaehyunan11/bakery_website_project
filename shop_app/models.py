@@ -57,7 +57,7 @@ class CustomerManager(models.Manager):
     def login_validator(self, postdata):
         errors = {}
         # Validate whether login email is blank
-        if len(postdata['login__mail']) < 1:
+        if len(postdata['login_email']) < 1:
             errors['login_email'] = "Please enter your email"
         # Validate whether login email format is correct
         if len(postdata['login_email']) > 0:
@@ -67,10 +67,10 @@ class CustomerManager(models.Manager):
         if len(postdata['login_password']) < 1:
             errors['login_password'] = "Please enter your password"
         # Filter login user
-        users = User.objects.filter(email=postdata['login_email'])
+        customers = Customer.objects.filter(email=postdata['login_email'])
         # Validate whether user signs up email.
         if len(postdata['login_email']) > 0:
-            if not users:
+            if not customers:
                 errors['login_email'] = "Your email has not been signed up!"
         return errors
 

@@ -6,28 +6,22 @@ import bcrypt
 # Create your views here.
 
 
-def store(request):
-    customer = Customer.objects.all()
-    foods = Food.objects.all()
-    # create context to pass some data
-    context = {
-        'customers': customer,
-        'foods': foods,
-    }
-    return render(request, 'shop_store.html', context)
+def index(request):
+    if not 'customer_id' in request.session:
+        return render(request, 'index.html')
+    else:
+        return redirect('store')
 
 
-def user_login(request):
-    context = {}
-    return render(request, 'user_login.html', context)
-
-
-def user_registration(request):
+def signup(request):
+    if request.method == "GET":
+        return redirect('/')
+    # Validate Error
     errors = Customer.objects.regi_validator(request.POST)
     if errors:
         for value in errors.values():
             messages.error(request, value)
-        return redirect('user_registration')
+        return redirect('/')
     else:
         new_customer = Customer.objects.create(
             first_name=request.POST['first_name'],
@@ -40,11 +34,50 @@ def user_registration(request):
             zipcode=request.POST['zipcode'],
             password=bcrypt.hashpw(
                 request.POST['password'].encode(), bcrypt.gensalt()).decode()
-
         )
+        # Restore Customer ID and Customer name in session
+        request.session['customer_id'] = new_customer.id
+        request.session['customer_name'] = new_customer.first_name
+        messages.success(request, "You are successfully registered")
+        return redirect('store')
 
-    context = {}
-    return render(request, 'user_registration.html', context)
+
+def login(request):
+    if request.method == "GET":
+        return redirect('/')
+    errors = Customer.objects.login_validator(request.POST)
+    if errors:
+        for value in errors.values():
+            messages.error(request, value)
+        return redirect('/')
+    else:
+        customers = Customer.objects.filter(email=request.POST['login_email'])
+        if customers:
+            customer = customers[0]
+            if bcrypt.checkpw(request.POST['login_password'].encode(), customer.password.encode()):
+                request.session['customer_id'] = customer.id
+                request.session['customer_name'] = customer.first_name
+                return redirect('store')
+            else:
+                messages.error(request, "Please check your email/password")
+    return redirect('/')
+
+
+def logout(request):
+    request.session.flush()
+    messages.success(request, "You are successfully logged out")
+    return redirect('/')
+
+
+def store(request):
+    customer = Customer.objects.all()
+    foods = Food.objects.all()
+    # create context to pass some data
+    context = {
+        'customers': customer,
+        'foods': foods,
+    }
+    return render(request, 'shop_store.html', context)
 
 
 def cart(request):

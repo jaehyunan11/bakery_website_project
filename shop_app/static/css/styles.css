@@ -67,12 +67,27 @@ h1 {
     margin: 5px 0;
 }
 
-h3 {
+/* h3 {
     font-size: var(--font-medium);
     color: var(--color-black);
     margin: 5px 0;
+} */
+
+/* Login & Registration */
+
+#login__regi {
+    display: flex;
+    justify-content: space-around;
+    margin: 10px;
 }
 
+#login__button {
+    width: 500px;
+}
+
+#create__button {
+    width: 500px;
+}
 
 /* Navbar */
 
@@ -306,61 +321,6 @@ h3 {
     font-size: var(--font-micro);
 }
 
-/* User_Login */
-
-#login__title {
-    margin-left: 311px;
-    font-style: italic;
-    font-size: var(--font-small);
-    font-weight: bold;
-}
-
-
-#login {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-
-}
-
-#user__login {
-    border: 2px solid var(--color-dark-grey);
-    padding: 30px;
-}
-
-#login__button {
-    width: 500px;
-}
-
-.create__account {
-    margin-top: 15px;
-    font-size: var(--font-micro);
-    margin-left: 20px;
-}
-
-#link__create__account {
-    color: var(--color-black);
-    text-decoration: underline;
-}
-
-
-/* Create Account */
-
-#create__account__container {
-    padding: 30px;
-    margin: 0px 230px;
-    
-}
-
-#create__account__form {
-    width: 400px;
-    margin: 10px 0px;
-    font-size: var(--font-micro);
-}
-
-#create__button {
-    width: 400px;
-}
 
 /* Buy_it_Now */
 
