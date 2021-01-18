@@ -43,12 +43,12 @@
             <hr>
             {% for item in items %}
             <div class="cart-row">
-                <div><img class="row-image" src="{{item.product.imageURL}}"></div>
+                <div><img class="row-image" src="{{item.food.imageURL}}"></div>
                 <div>
-                    <p>{{item.product.name}}</p>
+                    <p>{{item.food.name}}</p>
                 </div>
                 <div>
-                    <p>${{item.product.price|floatformat:2}}</p>
+                    <p>${{item.food.price}}</p>
                 </div>
                 <div>
                     <p>x{{item.quantity}}</p>
@@ -56,7 +56,7 @@
             </div>
             {% endfor %}
             <h5>Items: {{order.get_cart_items}}</h5>
-            <h5>Total: ${{order.get_cart_total|floatformat:2}}</h5>
+            <h5>Total: ${{order.get_cart_total}}</h5>
         </div>
     </div>
 </div>

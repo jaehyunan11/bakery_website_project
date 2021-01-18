@@ -123,7 +123,7 @@ class Order(models.Model):
     # models.SET_NULL means order will be remained although customer is deleted.
     # customer vs Order (customer can have multiple orders)
     customer = models.ForeignKey(
-        Customer, related_name="cust_orders", on_delete=models.SET_NULL, blank=True, null=True)
+        Customer, on_delete=models.SET_NULL, blank=True, null=True)
     date_ordered = models.DateTimeField(auto_now_add=True)
     complete = models.BooleanField(default=False, blank=True, null=True)
     transaction_id = models.CharField(max_length=100, null=True)
@@ -131,31 +131,49 @@ class Order(models.Model):
     def __str__(self):
         return str(self.id)
 
+    @property
+    def get_cart_total(self):
+        orderitems = self.orderitem_set.all()
+        total = sum([item.get_total for item in orderitems])
+        return total
+
+    @property
+    def get_cart_items(self):
+        orderitems = self.orderitem_set.all()
+        total = sum([item.quantity for item in orderitems])
+        return total
+
 
 class OrderItem(models.Model):
-    food = models.ForeignKey(Food, related_name="foods",
-                             on_delete=models.SET_NULL, blank=True, null=True)
+    food = models.ForeignKey(
+        Food, on_delete=models.SET_NULL, blank=True, null=True)
     # cart can have multiple ordertiems
     order = models.ForeignKey(
-        Order, related_name="orders", on_delete=models.SET_NULL, blank=True, null=True)
+        Order, on_delete=models.SET_NULL, blank=True, null=True)
     quantity = models.IntegerField(default=0, null=True, blank=True)
     date_added = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.food.name
 
+    @property
+    def get_total(self):
+        total = self.food.price * self.quantity
+        return total
+
 
 class ShippingAddress(models.Model):
     # just in case if order is deleted
     customer = models.ForeignKey(
-        Customer, related_name="cust_addresses", on_delete=models.SET_NULL, blank=True, null=True)
-    order = models.ForeignKey(Order, related_name="order_addresses",
-                              on_delete=models.SET_NULL, blank=True, null=True)
+        Customer, on_delete=models.SET_NULL, blank=True, null=True)
+    order = models.ForeignKey(
+        Order, on_delete=models.SET_NULL, blank=True, null=True)
     address = models.CharField(max_length=200, null=True)
     city = models.CharField(max_length=200, null=True)
     state = models.CharField(max_length=200, null=True)
     zipcode = models.CharField(max_length=200, null=True)
     date_added = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
-        return self.address
+
+def __str__(self):
+    return self.address

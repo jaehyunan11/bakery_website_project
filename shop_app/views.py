@@ -81,10 +81,34 @@ def store(request):
 
 
 def cart(request):
-    context = {}
+    customer = customer = Customer.objects.get(
+        id=request.session['customer_id'])
+    if customer:
+        order, created = Order.objects.get_or_create(
+            customer=customer, complete=False)
+        items = order.orderitem_set.all()
+    else:
+        items = []
+        order = {'get_cart_total': 0, 'get_cart_items': 0}
+    context = {
+        'items': items,
+        'order': order,
+    }
     return render(request, 'shop_cart.html', context)
 
 
 def buy_it_now(request):
-    context = {}
+    if request.user.is_authenticated:
+        # customer = request.user.customer
+        customer = Customer.objects.get(id=request.session['customer_id'])
+        order, created = Order.objects.get_or_create(
+            customer=customer, complete=False)
+        items = order.orderitem_set.all()
+    else:
+        items = []
+        order = {'get_cart_total': 0, 'get_cart_items': 0}
+    context = {
+        'items': items,
+        'order': order,
+    }
     return render(request, 'buy_it_now.html', context)
