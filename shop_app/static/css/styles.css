@@ -67,12 +67,6 @@ h1 {
     margin: 5px 0;
 }
 
-/* h3 {
-    font-size: var(--font-medium);
-    color: var(--color-black);
-    margin: 5px 0;
-} */
-
 /* Login & Registration */
 
 #login__regi {
@@ -82,11 +76,11 @@ h1 {
 }
 
 #login__button {
-    width: 500px;
+    width: 415px;
 }
 
 #create__button {
-    width: 500px;
+    width: 415px;
 }
 
 /* Navbar */
@@ -270,7 +264,7 @@ h1 {
 	background-color: #fff;
 	border-radius: 4px;
     padding: 10px;
-    width: 1140px;;
+    width: 1140px;
 }
 
 .cart-row {
@@ -329,6 +323,18 @@ h1 {
 	background-color: #fff;
 	border-radius: 4px;
     padding: 10px;
+}
+
+.box-payment-element {
+    box-shadow:hsl(0, 0%, 80%) 0 0 16px;
+	background-color: #fff;
+	border-radius: 4px;
+    padding: 10px;
+
+}
+
+#form-button {
+    width: 500px;
 }
 
 #shipping__title {

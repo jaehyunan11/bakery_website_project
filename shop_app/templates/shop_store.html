@@ -38,7 +38,9 @@
                         <h3>${{food.price}}</h3>
                     </strong>
                     <hr>
-                    <button class="btn btn-outline-dark" id="cart_btn">Add to Cart</button>
+                    <button data-food={{food.id}} data-action="add" class="btn btn-outline-dark add-btn update-cart"
+                        id="cart_btn">Add to
+                        Cart</button>
                     <a class="btn btn-outline-success" href="#" id="view_btn">View</a>
                 </div>
             </li>

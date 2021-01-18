@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
 from .models import *
 from django.contrib import messages
+from django.http import JsonResponse
 import bcrypt
+import json
 
 # Create your views here.
 
@@ -70,12 +72,25 @@ def logout(request):
 
 
 def store(request):
-    customer = Customer.objects.all()
+
+    customer = Customer.objects.get(
+        id=request.session['customer_id'])
+    if customer:
+        order, created = Order.objects.get_or_create(
+            customer=customer, complete=False)
+        items = order.orderitem_set.all()
+        cartItems = order.get_cart_items
+    else:
+        items = []
+        order = {'get_cart_total': 0, 'get_cart_items': 0, 'shipping': True}
+        cartItems = order['get_cart_items']
+
+        # create context to pass some data
     foods = Food.objects.all()
-    # create context to pass some data
     context = {
-        'customers': customer,
         'foods': foods,
+        'cartItems': cartItems,
+        'customers': customer,
     }
     return render(request, 'shop_store.html', context)
 
@@ -87,12 +102,15 @@ def cart(request):
         order, created = Order.objects.get_or_create(
             customer=customer, complete=False)
         items = order.orderitem_set.all()
+        cartItems = order.get_cart_items
     else:
         items = []
-        order = {'get_cart_total': 0, 'get_cart_items': 0}
+        order = {'get_cart_total': 0, 'get_cart_items': 0, 'shipping': True}
+        cartItems = order['get_cart_items']
     context = {
         'items': items,
         'order': order,
+        'cartItems': cartItems,
     }
     return render(request, 'shop_cart.html', context)
 
@@ -104,11 +122,42 @@ def buy_it_now(request):
         order, created = Order.objects.get_or_create(
             customer=customer, complete=False)
         items = order.orderitem_set.all()
+        cartItems = order.get_cart_items
     else:
         items = []
-        order = {'get_cart_total': 0, 'get_cart_items': 0}
+        order = {'get_cart_total': 0, 'get_cart_items': 0, 'shipping': True}
+        cartItems = order['get_cart_items']
     context = {
         'items': items,
         'order': order,
+        'cartItems': cartItems,
     }
     return render(request, 'buy_it_now.html', context)
+
+
+def update_item(request):
+    data = json.loads(request.body)
+    foodId = data['foodId']
+    action = data['action']
+
+    print('Action:', action)
+    print('FoodId:', foodId)
+
+    customer = Customer.objects.get(id=request.session['customer_id'])
+    food = Food.objects.get(id=foodId)
+    order, created = Order.objects.get_or_create(
+        customer=customer, complete=False)
+
+    orderItem, created = OrderItem.objects.get_or_create(
+        order=order, food=food)
+
+    if action == 'add':
+        orderItem.quantity = (orderItem.quantity + 1)
+    elif action == 'remove':
+        orderItem.quantity = (orderItem.quantity - 1)
+
+    orderItem.save()
+
+    if orderItem.quantity <= 0:
+        orderItem.delete()
+    return JsonResponse('Item was added', safe=False)
