@@ -40,7 +40,6 @@
             return cookieValue;
         }
         var csrftoken = getToken('csrftoken');
-        console.log('CSRFTOKEN', csrftoken)
 
         function getCookie(name) {
             // Split cookie starting and get all individual name=value pairs in an array
@@ -66,7 +65,7 @@
         let cart = JSON.parse(getCookie('cart'))
         if (cart == undefined) {
             cart = {}
-            console.log('Cart was created!')
+            console.log('Cart was created!', cart)
             document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/"
         }
         console.log('Cart:', cart)

@@ -7,17 +7,45 @@ for (let i = 0; i < updateBtns.length; i++) {
         console.log('foodId:', foodId, 'Action:', action)
 
         console.log('User:', user)
-        if (user === 'AnonymousUser') {
-            console.log('User is not log in')
-            // addCookieItem(foodId, action)
+        if (user == 'AnonymousUser') {
+            addCookieItem(foodId, action)
         } else {
             updateUserOrder(foodId, action)
-            // updateUserOrder(foodId, action)
 
         }
     })
 
 }
+
+// Update Cookieitem when user add or delete item in cart
+function addCookieItem(foodId, action) {
+    console.log('User is not log in')
+
+    if (action == 'add') {
+        if (cart[foodId] == undefined) {
+            cart[foodId] = { 'quantity': 1 }
+        } else {
+            cart[foodId]['quantity'] += 1
+        }
+    }
+
+    if (action == 'remove') {
+        cart[foodId]['quantity'] -= 1
+
+        if (cart[foodId]['quantity'] <= 0) {
+            console.log('Remove Item')
+            delete cart[foodId]
+        }
+    }
+
+    console.log('Cart:', cart)
+    document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/"
+    location.reload()
+}
+
+
+
+
 
 function updateUserOrder(foodId, action) {
     console.log('user is logged in, sending data')

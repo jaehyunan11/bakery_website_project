@@ -73,10 +73,9 @@ def logout(request):
 
 
 def store(request):
-
-    customer = Customer.objects.get(
-        id=request.session['customer_id'])
-    if customer:
+    if request.user.is_authenticated:
+        customer = Customer.objects.get(
+            id=request.session['customer_id'])
         order, created = Order.objects.get_or_create(
             customer=customer, complete=False)
         items = order.orderitem_set.all()
@@ -91,7 +90,6 @@ def store(request):
     context = {
         'foods': foods,
         'cartItems': cartItems,
-        'customers': customer,
     }
     return render(request, 'shop_store.html', context)
 
@@ -105,9 +103,39 @@ def cart(request):
         items = order.orderitem_set.all()
         cartItems = order.get_cart_items
     else:
+        try:
+            cart = json.loads(request.COOKIES['cart'])
+        except:
+            cart = {}
+        print('Cart:', cart)
         items = []
         order = {'get_cart_total': 0, 'get_cart_items': 0, 'shipping': True}
         cartItems = order['get_cart_items']
+
+        for i in cart:
+            try:
+                cartItems += cart[i]["quantity"]
+
+                food = Food.objects.get(id=i)
+                total = (food.price * cart[i]["quantity"])
+
+                order['get_cart_total'] += total
+                order['get_cart_items'] += cart[i]["quantity"]
+
+                item = {
+                    'food': {
+                        'id': food.id,
+                        'name': food.name,
+                        'price': food.price,
+                        'imageURL': food.imageURL,
+                    },
+                    'quantity': cart[i]["quantity"],
+                    'get_total': total
+                }
+                items.append(item)
+            except:
+                pass
+
     context = {
         'items': items,
         'order': order,
