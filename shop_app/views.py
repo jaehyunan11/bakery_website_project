@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.http import JsonResponse
 import bcrypt
 import json
+import datetime
 
 # Create your views here.
 
@@ -96,9 +97,9 @@ def store(request):
 
 
 def cart(request):
-    customer = customer = Customer.objects.get(
-        id=request.session['customer_id'])
-    if customer:
+    if request.user.is_authenticated:
+        customer = Customer.objects.get(
+            id=request.session['customer_id'])
         order, created = Order.objects.get_or_create(
             customer=customer, complete=False)
         items = order.orderitem_set.all()
@@ -117,8 +118,8 @@ def cart(request):
 
 def buy_it_now(request):
     if request.user.is_authenticated:
-        # customer = request.user.customer
-        customer = Customer.objects.get(id=request.session['customer_id'])
+        customer = Customer.objects.get(
+            id=request.session['customer_id'])
         order, created = Order.objects.get_or_create(
             customer=customer, complete=False)
         items = order.orderitem_set.all()
@@ -161,3 +162,34 @@ def update_item(request):
     if orderItem.quantity <= 0:
         orderItem.delete()
     return JsonResponse('Item was added', safe=False)
+
+
+def processOrder(request):
+    transaction_id = datetime.datetime.now().timestamp()
+    # Parsing the data and access it
+    data = json.loads(request.body)
+    if request.user.is_authenticated:
+        customer = Customer.objects.get(id=request.session['customer_id'])
+        order, created = Order.objects.get_or_create(
+            customer=customer, complete=False)
+        total = float(data['form']['total'])
+        order.transactions_id = transaction_id
+
+        if total == float(order.get_cart_total):
+            order.complete = True
+        order.save()
+
+        if order.shipping == True:
+            ShippingAddress.objects.create(
+                customer=customer,
+                order=order,
+                # shipping -> shippingInfo -> address,city, state, zipcode
+                address=data['shipping']['address'],
+                city=data['shipping']['city'],
+                state=data['shipping']['state'],
+                zipcode=data['shipping']['zipcode'],
+            )
+
+    else:
+        print('user is not logged in')
+    return JsonResponse('Payment complete!', safe=False)

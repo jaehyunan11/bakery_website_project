@@ -132,9 +132,9 @@ class Order(models.Model):
         return str(self.id)
 
     @property
-    def shippping(self):
+    def shipping(self):
         shipping = True
-        orderitems = self.orderitem_set()
+        orderitems = self.orderitem_set.all()
 
     @property
     def get_cart_total(self):
