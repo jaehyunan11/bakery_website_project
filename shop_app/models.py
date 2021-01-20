@@ -42,16 +42,6 @@ class CustomerManager(models.Manager):
         # Validate whether password is match
         if postdata['password'] != postdata['cf_password']:
             errors['password_not_match'] = "Password does not match"
-        # Validate whether birthday field is blank
-        if len(postdata['date_of_birth']) < 8:
-            errors['date_of_birth'] = "Please enter your birthday"
-        # Validate whether user enters valid birthday
-        else:
-            user_date_of_birth = datetime.strptime(
-                postdata['date_of_birth'], "%Y-%m-%d")
-            today = datetime.now()
-            if user_date_of_birth >= today:
-                errors['future_birthday'] = "Birthday cannot be in the future"
         return errors
 
     def login_validator(self, postdata):
@@ -82,7 +72,6 @@ class Customer(models.Model):
     first_name = models.CharField(max_length=200, null=True)
     last_name = models.CharField(max_length=200, null=True)
     email = models.EmailField()
-    date_of_birth = models.DateField()
     address = models.CharField(max_length=200, null=True)
     city = models.CharField(max_length=200, null=True)
     state = models.CharField(max_length=200, null=True)
