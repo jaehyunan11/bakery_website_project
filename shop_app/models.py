@@ -64,6 +64,34 @@ class CustomerManager(models.Manager):
                 errors['login_email'] = "Your email has not been signed up!"
         return errors
 
+    def edit_validator(self, postdata):
+        errors = {}
+        # Validate whether first name is less than 2 characters
+        if len(postdata['first_name']) < 2:
+            errors['first_name'] = "First name should be at least 2 characters"
+        # Validate whether first name incldues other than characters
+        if len(postdata['first_name']) > 0:
+            if not NAME_REGEX.match(postdata['first_name']):
+                errors['first_name_format'] = "First name should be only contained characters"
+        # Validate whether last name is less than 2 characters
+        if len(postdata['last_name']) < 2:
+            errors['last_name'] = "Last name should be at least 2 characters"
+        # Validate whether last name incldues other than characters
+        if len(postdata['last_name']) > 0:
+            if not NAME_REGEX.match(postdata['last_name']):
+                errors['last_name_format'] = "Last name should be only contained characters"
+        # Validate whether email is blank
+        if len(postdata['email']) < 1:
+            errors['email'] = "Please enter your email"
+        # Validate whether email format is correct
+        if len(postdata['email']) > 0:
+            if not EMAIL_REGEX.match(postdata['email']):
+                errors['email_format'] = "Please provide a valid email format"
+        # Validate whether password is less than 8 characters
+        if len(postdata['password']) < 8:
+            errors['password'] = "Password should be at least 8 characters"
+        return errors
+
 
 class Customer(models.Model):
     # User can have one customer and customer can have one user.

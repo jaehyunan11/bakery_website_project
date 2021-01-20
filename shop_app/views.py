@@ -81,7 +81,24 @@ def edit_mypage(request):
 
 
 def update_mypage(request):
-    pass
+    if request.method == "POST":
+        errors = Customer.objects.edit_validator(request.POST)
+        if errors:
+            for value in errors.values():
+                messages.error(request, value)
+            return redirect('edit_mypage')
+        else:
+            customer = Customer.objects.get(id=request.session['customer_id'])
+            customer.first_name = request.POST['first_name']
+            customer.last_name = request.POST['last_name']
+            customer.email = request.POST['email']
+            customer.address = request.POST['address']
+            customer.city = request.POST['city']
+            customer.state = request.POST['state']
+            customer.zipcode = request.POST['zipcode']
+            customer.password = request.POST['password']
+            customer.save()
+        return redirect('store')
 
 
 def store(request):
