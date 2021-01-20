@@ -340,3 +340,7 @@ h1 {
 #shipping__title {
     font-weight: bold;
 }
+
+.hidden{
+	display: none !important;
+}
