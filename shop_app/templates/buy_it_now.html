@@ -135,6 +135,7 @@
                 console.log('Success:', data);
                 alert('Transaction completed');
 
+                // Clear cookie after transaction complete
                 cart = {}
                 document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/"
 
