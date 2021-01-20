@@ -1,0 +1,49 @@
+{% extends 'shop_main.html' %}
+{% load static %}
+{% block content %}
+
+<h3>Edit Account</h3>
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+<form action="{% url 'update_mypage' %}" method=POST>
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="first_name">First Name</label>
+        <input type="text" class="form-control" name="first_name" id="first_name" value="{{customer.first_name}}">
+    </div>
+    <div class="form-group">
+        <label for="last_name">Last Name</label>
+        <input type="text" class="form-control" name="last_name" id="last_name" value="{{customer.last_name}}">
+    </div>
+    <div class=" form-group">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" name="email" id="email" value="{{customer.email}}">
+    </div>
+    <div class=" form-group">
+        <label for="address">Address</label>
+        <input type="text" class="form-control" name="address" id="address" value="{{customer.address}}">
+    </div>
+    <div class=" form-group">
+        <label for="city">City</label>
+        <input type="text" class="form-control" name="city" id="city" value="{{customer.city}}">
+    </div>
+    <div class=" form-group">
+        <label for="state">State</label>
+        <input type="text" class="form-control" name="state" id="state" value="{{customer.state}}">
+    </div>
+    <div class=" form-group">
+        <label for="zipcode">Zipcode</label>
+        <input type="text" class="form-control" name="zipcode" id="zipcode" value="{{customer.zipcode}}">
+    </div>
+    <div class=" form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" name="password" id="password">
+    </div>
+    <button type="submit" class="btn btn-dark" id="create__button">Update</button>
+</form>
+{% endblock content %}

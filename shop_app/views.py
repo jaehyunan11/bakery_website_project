@@ -73,6 +73,17 @@ def logout(request):
     return redirect('/')
 
 
+def edit_mypage(request):
+    context = {
+        'customer': Customer.objects.get(id=request.session['customer_id'])
+    }
+    return render(request, 'edit_mypage.html', context)
+
+
+def update_mypage(request):
+    pass
+
+
 def store(request):
     data = cartData(request)
     cartItems = data['cartItems']
