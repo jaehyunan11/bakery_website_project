@@ -31,7 +31,6 @@ def signup(request):
             first_name=request.POST['first_name'],
             last_name=request.POST['last_name'],
             email=request.POST['email'],
-            date_of_birth=request.POST['date_of_birth'],
             address=request.POST['address'],
             city=request.POST['city'],
             state=request.POST['state'],
@@ -125,6 +124,14 @@ def cart(request):
         'cartItems': cartItems,
     }
     return render(request, 'shop_cart.html', context)
+
+
+def food_detail(request):
+    foods = Food.objects.all()
+    context = {
+        'foods': foods,
+    }
+    return render(request, 'food_detail.html', context)
 
 
 def buy_it_now(request):
