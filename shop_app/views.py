@@ -126,10 +126,19 @@ def cart(request):
     return render(request, 'shop_cart.html', context)
 
 
-def food_detail(request):
-    foods = Food.objects.all()
+def food_detail(request, food_name):
+    data = cartData(request)
+    cartItems = data['cartItems']
+    order = data['order']
+    items = data['items']
+
+    food_name = Food.objects.filter(name=food_name)
+
     context = {
-        'foods': foods,
+        'items': items,
+        'order': order,
+        'cartItems': cartItems,
+        'food_name': food_name,
     }
     return render(request, 'food_detail.html', context)
 

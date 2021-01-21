@@ -94,8 +94,13 @@ h1 {
 
 }
 
+.navbar__user__name {
+    cursor: pointer;
+}
+
 .navbar__user__name a {
-    color: var(--color-dark-grey)
+    color: var(--color-dark-grey);
+    text-decoration: none;
 }
 
 .navbar__menu {

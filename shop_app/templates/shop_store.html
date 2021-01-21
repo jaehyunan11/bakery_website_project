@@ -1,16 +1,7 @@
 {% extends 'shop_main.html' %}
 {% load static %}
 {% block content %}
-<!-- Sub Header -->
-<!-- <section id="sub__header">
-    <div class="header__menu__main">
-        <ul class="header__menu">
-            <li class="header__menu__item" data-link="#bread">Bread</li>
-            <li class="header__menu__item" data-link="#jam">Jam</li>
-            <li class="header__menu__item" data-link="#cake">Cake</li>
-        </ul>
-    </div>
-</section> -->
+
 <section id="header__img">
     <div class="header__img__main">
         <img id="header__img__main" src="{% static 'images/Cannele.png' %}" alt="Cannele">
@@ -26,13 +17,13 @@
         <ul class="food__list">
             <li class="anchor__box">
                 <div class="thumbnail">
-                    <a href="#" name="anchor__box__1">
+                    <a href="{% url 'food_detail' food.name %}" name="anchor__box__1">
                         <img class="anchor__box__img" src="{{food.imageURL}}">
                     </a>
                 </div>
                 <div class="description">
                     <strong class="name">
-                        <a href="food_detail/{{food.id}}" class="food__name">{{food.name}}</a>
+                        <a href="{% url 'food_detail' food.name %}" class="food__name">{{food.name}}</a>
                     </strong>
                     <strong class="price">
                         <h3>${{food.price}}</h3>
@@ -41,7 +32,7 @@
                     <button data-food={{food.id}} data-action="add" class="btn btn-outline-dark add-btn update-cart"
                         id="cart_btn">Add to
                         Cart</button>
-                    <a class="btn btn-outline-success" href="#" id="view_btn">View</a>
+                    <a class="btn btn-outline-success" href="{% url 'food_detail' food.name %}" id="view_btn">View</a>
                 </div>
             </li>
         </ul>
