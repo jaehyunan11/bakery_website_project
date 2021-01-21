@@ -2,29 +2,35 @@
 {% load static %}
 {% block content %}
 {% for item in food_name %}
-<div class="bx__wrapper">
-    <ul class="food__list">
-        <li class="anchor__box">
-            <div class="thumbnail">
-                <a href="#" name="anchor__box__1">
-                    <img class="anchor__box__img" src="{{item.imageURL}}">
-                </a>
-            </div>
-            <div class="description">
-                <strong class="name">
-                    <a href="#" class="food__name">{{item.name}}</a>
-                </strong>
-                <strong class="price">
-                    <h3>${{item.price}}</h3>
-                </strong>
-                <hr>
-                <button data-food={{id.id}} data-action="add" class="btn btn-outline-dark add-btn update-cart"
-                    id="cart_btn">Add to
-                    Cart</button>
-                <a class="btn btn-outline-success" href="#" id="view_btn">View</a>
-            </div>
-        </li>
-    </ul>
+<div class="detail__bx__wrapper">
+    <div class="detail__image">
+        <a href="#" name="anchor__box__1">
+            <img class="anchor__box__img" src="{{item.imageURL}}">
+        </a>
+    </div>
+    <div class="detail__information">
+        <strong class="name">
+            <a href="#" class="food__name">Item: {{item.name}}</a>
+        </strong>
+        <hr>
+        <strong class="price">
+            <h3>Price: ${{item.price}}</h3>
+        </strong>
+        <hr>
+        <strong class="qty">
+            <h3>QTY: </h3>
+            <select class="form-control" id="selector">
+                <option value=1>1</option>
+                <option value=2>2</option>
+                <option value=3>3</option>
+                <option value=4>4</option>
+                <option value=5>5</option>
+            </select>
+        </strong>
+        <hr>
+        <button data-food={{item.id}} data-action="add" class="btn btn-outline-dark add-btn update-cart"
+            id="cart_btn">Add to Cart</button>
+    </div>
 </div>
 {% endfor %}
 {% endblock content %}
