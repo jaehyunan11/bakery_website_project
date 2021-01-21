@@ -170,34 +170,24 @@ h1 {
     padding: 25px 0px;
 }
 
+.header__name {
+    display:flex;
+    justify-content: center;
+}
+
 .header__name > h1 > a {
     text-decoration: none;
     color: var(--color-black);
 }
 
+#dalkong_img {
+    display:inline-block;
+    width: 50px;
+}
+
+
 /* Shop_store */
 /* Sub-header */
-
-/* #sub__header {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    
-} */
-
-/* .header__menu {
-    display: flex;
-} */
-
-/* .header__menu__item {
-    padding: 8px 12px;
-    margin: 0 4px;
-    cursor: pointer;
-    border: 1px solid transparent;
-    border-radius: var(--size-border-radius);
-    color: var(--color-dark-grey)
-    
-} */
 
 #header__img__main {
     display: block;

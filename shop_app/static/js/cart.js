@@ -21,6 +21,9 @@ for (let i = 0; i < updateBtns.length; i++) {
 function addCookieItem(foodId, action) {
     console.log('User is not log in')
 
+    let selector = document.getElementById('selector');
+    let number = document.getElementsByClassName('number');
+
     if (action == 'add') {
         if (cart[foodId] == undefined) {
             cart[foodId] = { 'quantity': 1 }
@@ -37,6 +40,10 @@ function addCookieItem(foodId, action) {
             delete cart[foodId]
         }
     }
+
+    // if (action == 'multi-add') {
+    //     cart[foodId]['quantity'] 
+    // }
 
     console.log('Cart:', cart)
     document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/"
