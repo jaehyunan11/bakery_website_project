@@ -76,11 +76,11 @@ h1 {
 }
 
 #login__button {
-    width: 415px;
+    width: 500px;
 }
 
-#create__button {
-    width: 415px;
+#register__button {
+    width: 500px;
 }
 
 /* Navbar */
@@ -381,4 +381,10 @@ h1 {
 
 .price h3 {
     font-size: var(--font-regular);
+}
+
+/* Edit my page */
+
+#update__button {
+    width: 500px;
 }
