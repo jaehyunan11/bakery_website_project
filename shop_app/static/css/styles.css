@@ -365,10 +365,9 @@ h1 {
 
 }
 
-.qty > h3 {
+.quantity h3{
     display: inline-block;
-    color: var(--color-black);
-    font-size: var(--font-micro);
+    font-size: var(--font-regular);
 }
 
 #selector {
