@@ -376,3 +376,11 @@ h1 {
     display: inline-block;
     width: 100px;
 }
+
+.food__name {
+    font-size: var(--font-regular);
+}
+
+.price h3 {
+    font-size: var(--font-regular);
+}
