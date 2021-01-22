@@ -22,7 +22,7 @@ function addCookieItem(foodId, action) {
     console.log('User is not log in')
 
     let selector = document.getElementById('selector');
-    let number = document.getElementsByClassName('number');
+    let optionValue = selector.value
 
     if (action == 'add') {
         if (cart[foodId] == undefined) {
@@ -39,6 +39,22 @@ function addCookieItem(foodId, action) {
             console.log('Remove Item')
             delete cart[foodId]
         }
+    }
+
+    if (action == 'multi-add') {
+        if (optionValue == 1) {
+            cart[foodId]['quantity'] += 1
+        } else if (optionValue == 2) {
+            cart[foodId]['quantity'] += 2
+        } else if (optionValue == 3) {
+            cart[foodId]['quantity'] += 3
+        } else if (optionValue == 4) {
+            cart[foodId]['quantity'] += 4
+        } else {
+            cart[foodId]['quantity'] += 5
+
+        }
+
     }
 
     console.log('Cart:', cart)
