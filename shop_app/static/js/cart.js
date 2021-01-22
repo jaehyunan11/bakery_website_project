@@ -41,10 +41,6 @@ function addCookieItem(foodId, action) {
         }
     }
 
-    // if (action == 'multi-add') {
-    //     cart[foodId]['quantity'] 
-    // }
-
     console.log('Cart:', cart)
     document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/"
     location.reload()

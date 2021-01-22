@@ -22,12 +22,13 @@
                     </a>
                 </div>
                 <div class="description">
-                    <strong class="name">
+                    <strong class="name_price">
                         <a href="{% url 'food_detail' food.name %}" class="food__name">{{food.name}}</a>
+                        <a href="#" class="food__price">${{food.price}}</a>
                     </strong>
-                    <strong class="price">
+                    <!-- <strong class="price">
                         <h3>${{food.price}}</h3>
-                    </strong>
+                    </strong> -->
                     <hr>
                     <button data-food={{food.id}} data-action="add" class="btn btn-outline-dark add-btn update-cart"
                         id="cart_btn">Add to
