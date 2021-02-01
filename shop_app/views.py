@@ -96,6 +96,8 @@ def update_mypage(request):
             return redirect('edit_mypage')
         else:
             customer = Customer.objects.get(id=request.session['customer_id'])
+            hash_pw = bcrypt.hashpw(
+                request.POST['password'].encode(), bcrypt.gensalt()).decode()
             customer.first_name = request.POST['first_name']
             customer.last_name = request.POST['last_name']
             customer.email = request.POST['email']
@@ -103,7 +105,7 @@ def update_mypage(request):
             customer.city = request.POST['city']
             customer.state = request.POST['state']
             customer.zipcode = request.POST['zipcode']
-            customer.password = request.POST['password']
+            customer.password = hash_pw
             customer.save()
         return redirect('store')
 
