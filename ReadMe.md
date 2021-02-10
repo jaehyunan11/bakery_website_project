@@ -12,4 +12,3 @@ API : Paypal API to make online PayPal transaction
 
 Features : Create Account, Login, Validate User information, Update User information, Add menu to Cart, View menu, Manupulate number of items, Make transaction via Payal.
 
-![Video Demo]
